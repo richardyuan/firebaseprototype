@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
+import { FirestoredbService } from '../services/firestoredb.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,10 +11,12 @@ import { AuthenticationService } from '../services/authentication.service';
 export class DashboardPage implements OnInit {
 
   usrEmail: string;
-
+  swimtime: number = 0;
+  
   constructor(
     private navController: NavController,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private fsService: FirestoredbService
   ) { }
 
   ngOnInit() {
@@ -31,11 +34,16 @@ export class DashboardPage implements OnInit {
   }
 
   getSwimtime() {
-    return this.generateSwimtime(46, 58, 2);    
+    this.swimtime = this.generateSwimtime(46, 58, 2); 
+    console.log(this.swimtime);   
   }
 
   sync() {
-
+    if (this.swimtime >= 0){
+      this.fsService.addSwimtime(this.swimtime);
+    } else {
+      console.error("Swimtime needs to be generated!");
+    }
   }
 
   logout() {
