@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content padding>
+ 
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        Dashboard prototype
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        Your used email: {{usrEmail}}
+      </ion-col>
+    </ion-row>
+  </ion-grid> 
+
+<ion-content>
+    <ion-button (click)="getSwimtime()">Get swimtime</ion-button>
+    <ion-button (click)="sync()">Sync to Cloud Firestore</ion-button>
+</ion-content>  
+
+
+</ion-content>
+<ion-footer (click)="logout()">
+  <ion-toolbar color="secondary">
+    <ion-title>Logout</ion-title>
+  </ion-toolbar>
+</ion-footer>
