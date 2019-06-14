@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
 import { FirestoredbService } from '../services/firestoredb.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,8 @@ export class DashboardPage implements OnInit {
 
   usrEmail: string;
   swimtime: number = 0;
-  
+  existingSwimtimes = []
+
   constructor(
     private navController: NavController,
     private authService: AuthenticationService,
@@ -34,16 +36,43 @@ export class DashboardPage implements OnInit {
   }
 
   getSwimtime() {
-    this.swimtime = this.generateSwimtime(46, 58, 2); 
-    console.log(this.swimtime);   
+    let record = {};
+    record['email'] = this.usrEmail;
+    record['swimtime'] = this.generateSwimtime(46, 58, 2);
+    console.log(record);
+    return record;
   }
 
   sync() {
-    if (this.swimtime >= 0){
-      this.fsService.addSwimtime(this.swimtime);
+    if (this.swimtime >= 45) {
+      this.fsService.addSwimtime(this.getSwimtime());
     } else {
       console.error("Swimtime needs to be generated!");
     }
+  }
+
+  retrieveSwimtimes() {
+    this.fsService.readSwimtimes().subscribe(data => {
+      let records = data.map(e => {
+        return {
+          //Id: e.payload.doc.id,
+          email: e.payload.doc.data()['email'],
+          swimtime: e.payload.doc.data()['swimtime']
+          
+        }
+      });
+      this.existingSwimtimes = this.sortRecords(records);
+      console.log(this.existingSwimtimes);
+    });
+  }
+
+  sortRecords(swimtimes) {
+    const x = _.sortBy(swimtimes, ['swimtime']);
+    return x;
+  }
+
+  logSwimtimes(){
+    console.log(this.existingSwimtimes);
   }
 
   logout() {
