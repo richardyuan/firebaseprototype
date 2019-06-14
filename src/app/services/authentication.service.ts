@@ -45,4 +45,12 @@ export class AuthenticationService {
     return firebase.auth().currentUser;
   }
 
+  federatedLogin() {
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).then((result) => {
+      let x = result.credential.toJSON;
+      console.log(x);
+    });
+  }
+
 }

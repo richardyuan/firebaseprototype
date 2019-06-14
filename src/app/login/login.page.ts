@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +48,8 @@ export class LoginPage implements OnInit {
     this.authService.loginUser(val)
     .then(res => {
       console.log(res);
-      this.errorMessage = "";
+      console.log('refresh token: ' + res.user.refreshToken);
+      console.log(firebase.auth().currentUser.getIdTokenResult());
       this.navController.navigateForward('/dashboard');
     }, err => {
       this.errorMessage = err.message;
@@ -55,6 +57,7 @@ export class LoginPage implements OnInit {
   }
  
   goToRegisterPage(){
+    
     this.navController.navigateForward('/register');
   }
 
