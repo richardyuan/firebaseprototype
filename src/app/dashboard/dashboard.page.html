@@ -24,13 +24,33 @@
     <ion-button (click)="sync()">Sync swimtime to Cloud Firestore</ion-button>
     <ion-button (click)="retrieveSwimtimes()">Retrieve swimtimes</ion-button>
     <ion-button (click)="logSwimtimes()">Log swimtimes</ion-button>
-</ion-content>  
 
-<ion-content>
-    
-</ion-content>  
+    <ngx-charts-bar-vertical
+      [results]="results"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-vertical>
 
+    <!-- <div>
+        <ngx-charts-bar-horizontal 
+        [xAxis] = "true"
+        [yAxis] = "true"
+        [results] = "results"
+        [showXAxisLabel] = "true"
+        [showYAxisLabel] = "true"
+        [xAxisLabel] = "'Email of swimmers'"
+        [yAxisLabel] = "'Swimtimes in seconds'">
+        </ngx-charts-bar-horizontal>
+    </div> -->
 </ion-content>
+
+
 <ion-footer (click)="logout()">
   <ion-toolbar color="secondary">
     <ion-title>Logout</ion-title>

@@ -3,6 +3,8 @@ import { NavController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
 import { FirestoredbService } from '../services/firestoredb.service';
 import * as _ from 'lodash';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +14,9 @@ import * as _ from 'lodash';
 export class DashboardPage implements OnInit {
 
   usrEmail: string;
-  swimtime: number = 0;
-  existingSwimtimes = []
+  usrSwimtime: number = 0;
+  existingSwimtimes = [];
+  results = [];
 
   constructor(
     private navController: NavController,
@@ -44,7 +47,7 @@ export class DashboardPage implements OnInit {
   }
 
   sync() {
-    if (this.swimtime >= 45) {
+    if (this.usrSwimtime >= 45) {
       this.fsService.addSwimtime(this.getSwimtime());
     } else {
       console.error("Swimtime needs to be generated!");
@@ -58,11 +61,11 @@ export class DashboardPage implements OnInit {
           //Id: e.payload.doc.id,
           email: e.payload.doc.data()['email'],
           swimtime: e.payload.doc.data()['swimtime']
-          
         }
       });
       this.existingSwimtimes = this.sortRecords(records);
       console.log(this.existingSwimtimes);
+      //this.results = this.existingSwimtimes;
     });
   }
 
@@ -72,7 +75,12 @@ export class DashboardPage implements OnInit {
   }
 
   logSwimtimes(){
-    console.log(this.existingSwimtimes);
+    //console.log(this.existingSwimtimes);
+    let item = this.existingSwimtimes[0];
+    console.log(item)
+    this.results.push(item);
+    this.results = [...this.results];
+    console.log(this.results);
   }
 
   logout() {
