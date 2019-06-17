@@ -12,7 +12,6 @@ import * as _ from 'lodash';
 export class DashboardPage implements OnInit {
 
   usrEmail: string;
-  usrSwimtime: number = 0;
   existingSwimtimes = [];
   results = [];
 
@@ -36,7 +35,7 @@ export class DashboardPage implements OnInit {
     return Math.floor(random * power) / power;
   }
 
-  getSwimtime() {
+  generateRecord() {
     let record = {};
     record['email'] = this.usrEmail;
     record['swimtime'] = this.generateSwimtime(46, 58, 2);
@@ -44,40 +43,33 @@ export class DashboardPage implements OnInit {
     return record;
   }
 
+  /**
+   * Generates record with logged in email and random swimtime
+   */
   sync() {
-    if (this.usrSwimtime >= 45) {
-      this.fsService.addSwimtime(this.getSwimtime());
-    } else {
-      console.error("Swimtime needs to be generated!");
-    }
+    this.fsService.addSwimtime(this.generateRecord());
   }
 
   retrieveSwimtimes() {
     this.fsService.readSwimtimes().subscribe(data => {
       let records = data.map(e => {
         return {
-          //Id: e.payload.doc.id,
-          email: e.payload.doc.data()['email'],
-          swimtime: e.payload.doc.data()['swimtime']
+          name: e.payload.doc.data()['email'],
+          value: e.payload.doc.data()['swimtime']
         }
       });
       this.existingSwimtimes = this.sortRecords(records);
       console.log(this.existingSwimtimes);
-      //this.results = this.existingSwimtimes;
     });
   }
 
   sortRecords(swimtimes) {
-    const x = _.sortBy(swimtimes, ['swimtime']);
+    const x = _.sortBy(swimtimes, ['value']);
     return x;
   }
 
-  logSwimtimes(){
-    //console.log(this.existingSwimtimes);
-    let item = this.existingSwimtimes[0];
-    console.log(item)
-    this.results.push(item);
-    this.results = [...this.results];
+  visualiseSwimtimes(){
+    this.results = [...this.existingSwimtimes]; //array destructure
     console.log(this.results);
   }
 

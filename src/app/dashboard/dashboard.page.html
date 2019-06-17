@@ -20,20 +20,19 @@
   </ion-grid> 
 
 <ion-content>
-    <ion-button (click)="getSwimtime()">Get swimtime</ion-button>
+    <ion-button (click)="generateSwimtime()">Generates swimtime</ion-button>
     <ion-button (click)="sync()">Sync swimtime to Cloud Firestore</ion-button>
     <ion-button (click)="retrieveSwimtimes()">Retrieve swimtimes</ion-button>
+    <ion-button (click)="visualiseSwimtimes()">Visualise swimtimes</ion-button>
 
     <ngx-charts-bar-vertical
       [results]="results"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel">
+      [xAxis] = "true"
+      [yAxis] = "true"
+      [showXAxisLabel] = "true"
+      [showYAxisLabel] = "true"
+      [xAxisLabel] = "'Email of swimmers'"
+      [yAxisLabel] = "'Swimtimes in seconds'">
     </ngx-charts-bar-vertical>
 
     <!-- <div>
