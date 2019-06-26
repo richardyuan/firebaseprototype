@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
 import { FirestoredbService } from '../services/firestoredb.service';
 import * as _ from 'lodash';
+import { accessdata } from '../services/accessdata.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,38 +19,29 @@ export class DashboardPage implements OnInit {
   constructor(
     private navController: NavController,
     private authService: AuthenticationService,
-    private fsService: FirestoredbService
+    private fsService: FirestoredbService,
+    private dataService: accessdata
   ) { }
 
   ngOnInit() {
     if (this.authService.userDetails()) {
-      this.usrEmail = this.authService.userDetails().email;
+      this.dataService.usrEmail = this.authService.userDetails().email;
     } else {
       this.navController.navigateBack('');
     }
   }
 
-  generateSwimtime(min, max, decimals) {
-    const random = Math.random() * (max - min) + min;
-    const power = Math.pow(10, decimals);
-    return Math.floor(random * power) / power;
-  }
-
-  generateRecord() {
-    let record = {};
-    record['email'] = this.usrEmail;
-    record['swimtime'] = this.generateSwimtime(46, 58, 2);
-    console.log(record);
-    return record;
+  /**
+   * Generates record with logged in email and random swimtime using authService
+   */
+  sync() {
+    const data = this.dataService.generateRecord();
+    this.fsService.addSwimtime(data);
   }
 
   /**
-   * Generates record with logged in email and random swimtime
+   * Retrieves swimtimes from Cloud Firestore
    */
-  sync() {
-    this.fsService.addSwimtime(this.generateRecord());
-  }
-
   retrieveSwimtimes() {
     this.fsService.readSwimtimes().subscribe(data => {
       let records = data.map(e => {
@@ -63,16 +55,25 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  sortRecords(swimtimes) {
-    const x = _.sortBy(swimtimes, ['value']);
-    return x;
+  /**
+   * Sorts records by swimtime low to high (lodash)
+   * @param records list of records
+   */
+  sortRecords(records) {
+    return _.sortBy(records, ['value']);
   }
 
+  /**
+   * Uses array destructuring to refresh and visualise the graph
+   */
   visualiseSwimtimes(){
-    this.results = [...this.existingSwimtimes]; //array destructure
+    this.results = [...this.existingSwimtimes]; 
     console.log(this.results);
   }
 
+  /**
+   * Logs out using the Firestore authService for total deletion of user credentials e.g. Access tokens
+   */
   logout() {
     this.authService.logoutUser()
       .then(res => {

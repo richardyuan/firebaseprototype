@@ -10,7 +10,7 @@ export class FirestoredbService {
   }
 
   addSwimtime(time) {
-    return this.firestore.collection('Swimtimes').add(time);
+    this.firestore.collection('Swimtimes').add(time);
   }
 
   readSwimtimes() {

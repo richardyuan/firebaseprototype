@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
   constructor(
     private navController: NavController,
     private authService: AuthenticationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -48,7 +48,6 @@ export class LoginPage implements OnInit {
     this.authService.loginUser(val)
     .then(res => {
       console.log(res);
-      console.log('refresh token: ' + res.user.refreshToken);
       console.log(firebase.auth().currentUser.getIdTokenResult());
       this.navController.navigateForward('/dashboard');
     }, err => {
@@ -57,7 +56,6 @@ export class LoginPage implements OnInit {
   }
  
   goToRegisterPage(){
-    
     this.navController.navigateForward('/register');
   }
 

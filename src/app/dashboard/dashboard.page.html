@@ -24,6 +24,7 @@
     <ion-button (click)="sync()">Sync swimtime to Cloud Firestore</ion-button>
     <ion-button (click)="retrieveSwimtimes()">Retrieve swimtimes</ion-button>
     <ion-button (click)="visualiseSwimtimes()">Visualise swimtimes</ion-button>
+    <ion-button (click)="logout()">Logout</ion-button>
 
     <ngx-charts-bar-vertical
       [results]="results"
@@ -35,22 +36,10 @@
       [yAxisLabel] = "'Swimtimes in seconds'">
     </ngx-charts-bar-vertical>
 
-    <!-- <div>
-        <ngx-charts-bar-horizontal 
-        [xAxis] = "true"
-        [yAxis] = "true"
-        [results] = "results"
-        [showXAxisLabel] = "true"
-        [showYAxisLabel] = "true"
-        [xAxisLabel] = "'Email of swimmers'"
-        [yAxisLabel] = "'Swimtimes in seconds'">
-        </ngx-charts-bar-horizontal>
-    </div> -->
 </ion-content>
 
-
-<ion-footer (click)="logout()">
+<!-- <ion-footer (click)="logout()">
   <ion-toolbar color="secondary">
     <ion-title>Logout</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

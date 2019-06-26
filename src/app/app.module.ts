@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthenticationService } from './services/authentication.service';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import * as firebase from 'firebase';
+import { accessdata } from './services/accessdata.service';
 
 firebase.initializeApp(environment.firebase);
 
@@ -35,7 +35,8 @@ firebase.initializeApp(environment.firebase);
     StatusBar,
     SplashScreen,
     AuthenticationService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    accessdata,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     //{ provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent]

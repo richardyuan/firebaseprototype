@@ -8,4 +8,8 @@ export class AppPage {
   getParagraphText() {
     return element(by.deepCss('app-root ion-content')).getText();
   }
+
+  navigateLogin() {
+    return browser.get('/login');
+  }
 }
