@@ -20,11 +20,11 @@
   </ion-grid> 
 
 <ion-content>
-    <ion-button (click)="generateSwimtime()">Generates swimtime</ion-button>
-    <ion-button (click)="sync()">Sync swimtime to Cloud Firestore</ion-button>
-    <ion-button (click)="retrieveSwimtimes()">Retrieve swimtimes</ion-button>
-    <ion-button (click)="visualiseSwimtimes()">Visualise swimtimes</ion-button>
-    <ion-button (click)="logout()">Logout</ion-button>
+    <ion-button class="generateSwimtime" (click)="generateSwimtime()">Generates swimtime</ion-button>
+    <ion-button class="sync" (click)="sync()">Sync swimtime to Cloud Firestore</ion-button>
+    <ion-button class="retrieveSwimtimes" (click)="retrieveSwimtimes()">Retrieve swimtimes</ion-button>
+    <ion-button class="visualiseSwimtimes" (click)="visualiseSwimtimes()">Visualise swimtimes</ion-button>
+    <ion-button class="logout" (click)="logout()">Logout</ion-button>
 
     <ngx-charts-bar-vertical
       [results]="results"

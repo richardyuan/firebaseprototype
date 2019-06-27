@@ -1,20 +1,25 @@
 import { LoginPageTest } from "./LoginPageTest";
-import { browser, by, element, Ptor } from 'protractor';
-
+import { browser } from 'protractor';
+import { DashboardPageTest } from './DashboardPageTest';
+import { protractor } from 'protractor/built/ptor';
 
 describe('new App', () => {
-  let page: LoginPageTest = new LoginPageTest()
+  const logintest: LoginPageTest = new LoginPageTest();
+  const dashboardPage: DashboardPageTest = new DashboardPageTest();
 
   beforeEach(() => {
-    page.load();
+    logintest.load();
   });
 
-  it('should login', () => {
-    //page.enterEMail('a@live.com');
-    // var email = Ptor.findElement(protractor.By.model('email'));
-    // var password = Ptor.findElement(protractor.By.model('password'));
-    page.enterEMail('a@live.com');
-    
-  })
+  it('should login, retrieve data and visualise it from Firebase', () => {
+    logintest.enterEmail('a@live.com');
+    logintest.enterPassword('password123');
+    logintest.clickSignIn();
+    dashboardPage.waitUntilVisible();
+    dashboardPage.clickOnButton('.retrieveSwimtimes');
+    browser.sleep(1000);
+    dashboardPage.clickOnButton('.visualiseSwimtimes');
+    browser.sleep(1000);
+  });
 
 });
