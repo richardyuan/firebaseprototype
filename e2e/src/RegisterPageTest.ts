@@ -1,9 +1,9 @@
 import { browser, by, element, ExpectedConditions } from 'protractor';
 import { PageObjectBase } from './PageObjectBase';
 
-export class LoginPageTest extends PageObjectBase {
+export class RegisterPageTest extends PageObjectBase {
   constructor() {
-    super('app-login', '/login');
+    super('app-register', '/register');
   }
 
   waitForError() {
@@ -23,10 +23,6 @@ export class LoginPageTest extends PageObjectBase {
 
   enterPassword(password: string) {
     this.enterInputText('.password', password);
-  }
-
-  clickSignIn() {
-    this.clickButton('.submit-btn');
   }
 
   clickOnButton(buttonName: string) {
